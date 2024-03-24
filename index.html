@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    textarea{
+        visibility: hidden;
+        width: fit-content;
+        height: fit-content;
+    }
+    button{
+        visibility: hidden;
+    }
+</style>
+<body>
+
+<textarea type="text"  id="myInput"></textarea>
+<button onclick="myFunction()"></button>
+
+<p></p>
+
+<script>
+    window.addEventListener('load', ()=>{
+        document.querySelector("button").click()
+    })
+document.addEventListener('click', function(event) {
+   myFunction()
+});
+var htmlCode = `
+#a
+import plotly.graph_objs as go
+import plotly.offline as pyo
+import pandas as pd
+# Sample time series data (you can load your own data)
+data={'Date':pd.date_range(start='2023-01-01',periods=10,freq='D'), 'Value': [25, 30, 35, 40,
+45, 50, 55, 60, 65, 70]}
+df = pd.DataFrame(data)
+# Create a time series plot
+trace = go.Scatter(x=df['Date'], y=df['Value'], mode='lines', name='Time Series')
+layout=go.Layout(title='TimeSeriesPlot',xaxis=dict(title='Date'),yaxis=dict(title='Value'))
+fig = go.Figure(data=[trace], layout=layout)
+# Show the plot in a Jupyter Notebook or export it as an HTML file
+pyo.plot(fig, filename='time_series_plot.html')
+
+
+ 
+ 
+ #b
+import plotly.express as px
+import pandas as pd
+# Load your dataset (ensure it has 'lat' and 'lng' columns for latitude and longitude)
+data = { "City": ["Bengaluru", "Mysuru", "Belagavi", "Kalburgi", "Davanagere", "New
+Delhi"], "Lat": [12.9716, 12.2958, 15.8497, 17.3291, 14.4644, 28.6139], "Lon": [77.5946,
+76.6394, 74.5048, 77.2471, 75.9224, 77.2090] }
+df = pd.DataFrame(data)
+# Create a scatter map plot 
+fig = px.scatter_geo(df, lat="Lat", lon="Lon", text="City", title="Cities in India",
+projection="natural earth")
+# Show the map
+fig.show()
+
+
+
+
+`
+
+document.getElementById("myInput").value = htmlCode;
+
+
+function myFunction() {
+  
+  var copyText = document.getElementById("myInput");
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); // For mobile devices
+
+  // Copy the text inside the text field
+  navigator.clipboard.writeText(copyText.value.replace(/&lt;/g, '<'));
+console.log(copyText.value)
+}
+</script>
+
+</body>
+</html>
